@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/侧边栏">
+        <file>images/account-circle-line.png</file>
+        <file>images/address-card.png</file>
+        <file>images/bookmark.png</file>
+        <file>images/calendar1.png</file>
+        <file>images/edit.png</file>
+        <file>images/edit-box-line.png</file>
+        <file>images/eye-line.png</file>
+        <file>images/image.png</file>
+        <file>images/lock.png</file>
+        <file>images/search.png</file>
+        <file>images/share-circle-line.png</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>studentSystem.ico</file>
+        <file>images/sdu.png</file>
+    </qresource>
+    <qresource prefix="/管理员">
+        <file>images/1.png</file>
+        <file>images/2.png</file>
+        <file>images/3.png</file>
+        <file>images/4.png</file>
+        <file>images/5.png</file>
+        <file>images/6.png</file>
+    </qresource>
+    <qresource prefix="/按钮图标">
+        <file>images/check-circle.png</file>
+        <file>images/close-circle.png</file>
+        <file>images/image.png</file>
+        <file>images/left-circle.png</file>
+        <file>images/minus-circle.png</file>
+        <file>images/stop.png</file>
+        <file>images/sync.png</file>
+        <file>images/plus-circle.png</file>
+        <file>images/save.png</file>
+    </qresource>
+</RCC>

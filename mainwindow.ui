@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>学生信息管理系统</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="rec.qrc">
+    <normaloff>:/icon/studentSystem.ico</normaloff>:/icon/studentSystem.ico</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>60</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="a1"/>
+   <addaction name="separator"/>
+   <addaction name="a2"/>
+   <addaction name="a4"/>
+   <addaction name="a5"/>
+   <addaction name="a6"/>
+   <addaction name="separator"/>
+   <addaction name="a7"/>
+  </widget>
+  <action name="a1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/address-card.png</normaloff>:/侧边栏/images/address-card.png</iconset>
+   </property>
+   <property name="text">
+    <string>个人信息</string>
+   </property>
+   <property name="toolTip">
+    <string>个人信息 快捷键：Ctrl+1</string>
+   </property>
+   <property name="statusTip">
+    <string>个人信息 快捷键：Ctrl+1</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+   <property name="priority">
+    <enum>QAction::HighPriority</enum>
+   </property>
+  </action>
+  <action name="a2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/search.png</normaloff>:/侧边栏/images/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>成绩查询</string>
+   </property>
+   <property name="toolTip">
+    <string>成绩查询 快捷键：Ctrl+2</string>
+   </property>
+   <property name="statusTip">
+    <string>成绩查询 快捷键：Ctrl+2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="a4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/calendar1.png</normaloff>:/侧边栏/images/calendar1.png</iconset>
+   </property>
+   <property name="text">
+    <string>选课浏览</string>
+   </property>
+   <property name="toolTip">
+    <string>选课浏览 快捷键：Ctrl+3</string>
+   </property>
+   <property name="statusTip">
+    <string>选课浏览 快捷键：Ctrl+3</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="a5">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/bookmark.png</normaloff>:/侧边栏/images/bookmark.png</iconset>
+   </property>
+   <property name="text">
+    <string>课程信息</string>
+   </property>
+   <property name="toolTip">
+    <string>课程信息 快捷键：Ctrl+4</string>
+   </property>
+   <property name="statusTip">
+    <string>课程信息 快捷键：Ctrl+4</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="a6">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/lock.png</normaloff>:/侧边栏/images/lock.png</iconset>
+   </property>
+   <property name="text">
+    <string>修改密码</string>
+   </property>
+   <property name="toolTip">
+    <string>修改密码 快捷键：Ctrl+5</string>
+   </property>
+   <property name="statusTip">
+    <string>修改密码 快捷键：Ctrl+5</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="a7">
+   <property name="icon">
+    <iconset resource="rec.qrc">
+     <normaloff>:/侧边栏/images/share-circle-line.png</normaloff>:/侧边栏/images/share-circle-line.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出系统</string>
+   </property>
+   <property name="toolTip">
+    <string>退出系统</string>
+   </property>
+   <property name="statusTip">
+    <string>退出系统</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="rec.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>a7</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
