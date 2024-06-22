@@ -1,6 +1,19 @@
+/**
+ * @file teachermanagement.cpp
+ * @brief 此文件包含了 `teacherManagement` 类的定义，用于处理教师管理相关的功能
+ */
+
 #include "managerTerminal/headfile/teachermanagement.h"
 #include "ui_teachermanagement.h"
 
+/**
+ * @brief `teacherManagement` 类的构造函数
+ *
+ * 初始化教师管理界面，并进行相关的数据模型、选择模型、映射等设置
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 teacherManagement::teacherManagement(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -72,12 +85,17 @@ teacherManagement::teacherManagement(QWidget *parent,QSqlDatabase * GDB)
 
 }
 
+/**
+ * @brief `teacherManagement` 类的析构函数
+ */
 teacherManagement::~teacherManagement()
 {
     delete ui;
 }
 
-//获取所有字段名称
+/**
+ * @brief 获取所有字段名称
+ */
 void teacherManagement::getFieldNames()
 {
     QSqlRecord  emptyRec=tabModel->record();    //获取空记录，只有字段名
@@ -85,7 +103,12 @@ void teacherManagement::getFieldNames()
         ui->comboFields->addItem(emptyRec.fieldName(i));
 }
 
-//数据发生修改，更新actPost和actCancel 的状态
+/**
+ * @brief 数据发生修改，更新 actPost 和 actCancel 的状态
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引
+ */
 void teacherManagement::do_currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current);
@@ -94,6 +117,12 @@ void teacherManagement::do_currentChanged(const QModelIndex &current, const QMod
     ui->actRevert->setEnabled(tabModel->isDirty());
 }
 
+/**
+ * @brief 当当前行改变时的处理函数
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引
+ */
 void teacherManagement::do_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
@@ -106,6 +135,9 @@ void teacherManagement::do_currentRowChanged(const QModelIndex &current, const Q
     QSqlRecord  curRec=tabModel->record(curRecNo); //获取当前记录
 }
 
+/**
+ * @brief 点击"添加记录"按钮的响应函数
+ */
 void teacherManagement::on_actRecAppend_clicked()
 {//添加一条记录
     //// 使用QSqlRecord
@@ -119,7 +151,9 @@ void teacherManagement::on_actRecAppend_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);
 }
 
-
+/**
+ * @brief 点击"插入记录"按钮的响应函数
+ */
 void teacherManagement::on_actRecInsert_clicked()
 {//插入一条记录
     //// 使用QSqlRecord
@@ -131,7 +165,9 @@ void teacherManagement::on_actRecInsert_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);    //设置当前行
 }
 
-
+/**
+ * @brief 点击"保存修改"按钮的响应函数
+ */
 void teacherManagement::on_actSubmit_clicked()
 {//保存修改
     bool res=tabModel->submitAll();
@@ -144,7 +180,9 @@ void teacherManagement::on_actSubmit_clicked()
     }
 }
 
-
+/**
+ * @brief 点击"取消修改"按钮的响应函数
+ */
 void teacherManagement::on_actRevert_clicked()
 {//取消修改
     tabModel->revertAll();
@@ -152,25 +190,37 @@ void teacherManagement::on_actRevert_clicked()
     ui->actRevert->setEnabled(false);
 }
 
-
+/**
+ * @brief 点击"删除当前记录"按钮的响应函数
+ */
 void teacherManagement::on_actRecDelete_clicked()
 {//删除当前记录
     QModelIndex curIndex=selModel->currentIndex();  //获取当前选择单元格的模型索引
     tabModel->removeRow(curIndex.row()); //删除当前行
 }
 
+/**
+ * @brief 点击"升序排序"按钮的响应函数
+ */
 void teacherManagement::on_radioBtnAscend_clicked()
 {//升序排序
     tabModel->setSort(ui->comboFields->currentIndex(),Qt::AscendingOrder);
     tabModel->select();     //setSort()之后需要执行select()才会刷新数据
 }
 
-
+/**
+ * @brief 点击"降序排序"按钮的响应函数
+ */
 void teacherManagement::on_radioBtnDescend_clicked()
 {//降序排序
     tabModel->sort(ui->comboFields->currentIndex(),Qt::DescendingOrder);
 }
 
+/**
+ * @brief 选择字段进行排序时的响应函数
+ *
+ * @param index 选择的字段索引
+ */
 void teacherManagement::on_comboFields_currentIndexChanged(int index)
 {//选择字段进行排序
     if (ui->radioBtnAscend->isChecked())
@@ -181,6 +231,11 @@ void teacherManagement::on_comboFields_currentIndexChanged(int index)
     tabModel->select();
 }
 
+/**
+ * @brief 当搜索框文本改变时的响应函数
+ *
+ * @param arg1 搜索框的当前文本
+ */
 void teacherManagement::on_lineEdit_textChanged(const QString &arg1)
 {//搜索姓名
     tabModel->setFilter(QString(" teacherID LIKE '%1%' ").arg(arg1));

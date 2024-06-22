@@ -1,7 +1,15 @@
+/**
+ * @file login.cpp
+ * @brief 这个文件包含了 `Login` 类的实现，用于用户登录
+ */
+
 #include "login.h"
 #include "ui_login.h"
 
-//读取存储的用户名和密码, 密码是经过加密的
+/**
+ * @brief 读取存储的用户名和密码, 密码是经过加密的
+ * 
+ */
 void Login::readSettings()
 {
     QSettings settings;     //创建QSettings对象
@@ -16,7 +24,10 @@ void Login::readSettings()
     ui->chkBoxSave->setChecked(saved);      //设置注册表saved状态
 }
 
-//保存用户名，密码等设置
+/**
+ * @brief 保存用户名，密码等设置
+ * 
+ */
 void Login::writeSettings()
 {
     QSettings   settings;   //注册表键组
@@ -24,6 +35,12 @@ void Login::writeSettings()
     settings.setValue("saved",ui->chkBoxSave->isChecked());
 }
 
+/**
+ * @brief 加密算法（MD5）
+ * 
+ * @param str 需要加密的字符串
+ * @return QString 返回的加密后字符串
+ */
 QString Login::encrypt(const QString &str)
 { //字符串MD5算法加密
     QByteArray btArray= str.toLocal8Bit();  //字符串转换为字节数组数据
@@ -36,6 +53,11 @@ QString Login::encrypt(const QString &str)
     return  md5;
 }
 
+/**
+ * @brief 鼠标点击相应
+ * 
+ * @param event 全局事件
+ */
 void Login::mousePressEvent(QMouseEvent *event)
 { //鼠标按键被按下
     if (event->button() == Qt::LeftButton)
@@ -46,6 +68,11 @@ void Login::mousePressEvent(QMouseEvent *event)
     return QDialog::mousePressEvent(event);
 }
 
+/**
+ * @brief 鼠标拖动相应
+ * 
+ * @param event 全局事件
+ */
 void Login::mouseMoveEvent(QMouseEvent *event)
 { //鼠标按下左键移动
     QPoint eventPos=event->globalPosition().toPoint();
@@ -59,12 +86,23 @@ void Login::mouseMoveEvent(QMouseEvent *event)
     return QDialog::mouseMoveEvent(event);
 }
 
+/**
+ * @brief 鼠标释放相应
+ * 
+ * @param event 全局事件
+ */
 void Login::mouseReleaseEvent(QMouseEvent *event)
 { //鼠标按键被释放
     __moving=false;     //停止移动
     event->accept();
 }
 
+/**
+ * @brief 构造函数，进行界面初始化
+ * 
+ * @param GDB 全局数据库连接
+ * @param parent 父对象
+ */
 Login::Login(QSqlDatabase * GDB,QWidget *parent) :
     QDialog(parent),
     __GDB(GDB),
@@ -82,11 +120,19 @@ Login::Login(QSqlDatabase * GDB,QWidget *parent) :
     readSettings(); //读取存储的用户名和密码
 }
 
+/**
+ * @brief 析构函数
+ * 
+ */
 Login::~Login()
 {
     delete ui;
 }
 
+/**
+ * @brief 登录验证函数
+ * 
+ */
 void Login::on_btnOK_clicked()
 {//"确定"按钮响应
 

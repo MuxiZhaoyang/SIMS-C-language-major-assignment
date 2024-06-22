@@ -1,6 +1,19 @@
+/**
+ * @file studentmanagement.cpp
+ * @brief 学生管理类的实现文件
+ */
+
 #include "managerTerminal/headfile/studentmanagement.h"
 #include "ui_studentmanagement.h"
 
+/**
+ * @brief 学生管理类的构造函数
+ *
+ * 初始化学生管理界面的相关设置
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 studentManagement::studentManagement(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -101,7 +114,9 @@ studentManagement::studentManagement(QWidget *parent,QSqlDatabase * GDB)
     ui->tableView->setAlternatingRowColors(true);	//交错行底色
 }
 
-//获取所有字段名称
+/**
+ * @brief 获取所有字段名称
+ */
 void studentManagement::getFieldNames()
 {
     QSqlRecord  emptyRec=tabModel->record();    //获取空记录，只有字段名
@@ -109,11 +124,17 @@ void studentManagement::getFieldNames()
         ui->comboFields->addItem(emptyRec.fieldName(i));
 }
 
+/**
+ * @brief 学生管理类的析构函数
+ */
 studentManagement::~studentManagement()
 {
     delete ui;
 }
 
+/**
+ * @brief 处理添加记录的点击事件
+ */
 void studentManagement::on_actRecAppend_clicked()
 {//添加一条记录
     //// 使用QSqlRecord
@@ -127,7 +148,12 @@ void studentManagement::on_actRecAppend_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);
 }
 
-//数据发生修改，更新actPost和actCancel 的状态
+/**
+ * @brief 当数据发生修改时，更新 actPost 和 actCancel 的状态
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引
+ */
 void studentManagement::do_currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current);
@@ -136,6 +162,14 @@ void studentManagement::do_currentChanged(const QModelIndex &current, const QMod
     ui->actRevert->setEnabled(tabModel->isDirty());
 }
 
+/**
+ * @brief 处理行切换时的状态控制
+ *
+ * 该函数用于在行切换时控制相关按钮的可用性，并根据当前行的记录情况处理图片显示
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引（未使用）
+ */
 void studentManagement::do_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
@@ -166,25 +200,38 @@ void studentManagement::do_currentRowChanged(const QModelIndex &current, const Q
     }
 }
 
-
-
-
-
-
-
-
-//自定义代理
+/**
+ * @brief 自定义组合框代理的构造函数
+ *
+ * @param parent 父对象
+ */
 TComboBoxDelegate::TComboBoxDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
 
 }
 
+/**
+ * @brief 设置组合框的项和可编辑状态
+ *
+ * @param items 项列表
+ * @param editable 是否可编辑
+ */
 void TComboBoxDelegate::setItems(QStringList items, bool editable)
 {
     m_itemList=items;
     m_editable=editable;
 }
 
+/**
+ * @brief 创建编辑器
+ *
+ * 为给定的父部件、样式选项、模型索引创建组合框编辑器
+ *
+ * @param parent 父部件
+ * @param option 样式选项
+ * @param index 模型索引
+ * @return QWidget* 创建的编辑器
+ */
 QWidget *TComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                          const QModelIndex &index) const
 {
@@ -198,6 +245,14 @@ QWidget *TComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionView
     return editor;
 }
 
+/**
+ * @brief 设置编辑器数据
+ *
+ * 将模型数据设置到编辑器
+ *
+ * @param editor 编辑器
+ * @param index 模型索引
+ */
 void TComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     QString str = index.model()->data(index, Qt::EditRole).toString();
@@ -207,6 +262,15 @@ void TComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
 
 }
 
+/**
+ * @brief 设置模型数据
+ *
+ * 将编辑器的数据设置到模型
+ *
+ * @param editor 编辑器
+ * @param model 模型
+ * @param index 模型索引
+ */
 void TComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                      const QModelIndex &index) const
 {
@@ -217,6 +281,15 @@ void TComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     model->setData(index, str, Qt::EditRole);
 }
 
+/**
+ * @brief 更新编辑器几何形状
+ *
+ * 设置编辑器的几何形状
+ *
+ * @param editor 编辑器
+ * @param option 样式选项
+ * @param index 模型索引
+ */
 void TComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option,
                                              const QModelIndex &index) const
 {
@@ -224,9 +297,11 @@ void TComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
     editor->setGeometry(option.rect);
 }
 
-
-
-
+/**
+ * @brief 处理插入记录的点击事件
+ *
+ * 在当前行前面插入一条空记录
+ */
 void studentManagement::on_actRecInsert_clicked()
 {//插入一条记录
     //// 使用QSqlRecord
@@ -238,7 +313,11 @@ void studentManagement::on_actRecInsert_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);    //设置当前行
 }
 
-
+/**
+ * @brief 处理保存修改的点击事件
+ *
+ * 尝试提交所有修改，如果失败显示错误信息，成功则更新按钮状态
+ */
 void studentManagement::on_actSubmit_clicked()
 {//保存修改
     bool res=tabModel->submitAll();
@@ -251,7 +330,11 @@ void studentManagement::on_actSubmit_clicked()
     }
 }
 
-
+/**
+ * @brief 处理取消修改的点击事件
+ *
+ * 撤销所有修改，并更新按钮状态
+ */
 void studentManagement::on_actRevert_clicked()
 {//取消修改
     tabModel->revertAll();
@@ -259,14 +342,22 @@ void studentManagement::on_actRevert_clicked()
     ui->actRevert->setEnabled(false);
 }
 
-
+/**
+ * @brief 处理删除当前记录的点击事件
+ *
+ * 删除当前选中的行
+ */
 void studentManagement::on_actRecDelete_clicked()
 {//删除当前记录
     QModelIndex curIndex=selModel->currentIndex();  //获取当前选择单元格的模型索引
     tabModel->removeRow(curIndex.row()); //删除当前行
 }
 
-
+/**
+ * @brief 处理设置照片的点击事件
+ *
+ * 选择照片文件，将其数据保存到当前记录的"photo"字段，并在界面显示
+ */
 void studentManagement::on_actPhoto_clicked()
 {//设置照片
     QString aFile=QFileDialog::getOpenFileName(this,"选择图片文件","","照片(*.jpg)");
@@ -290,7 +381,11 @@ void studentManagement::on_actPhoto_clicked()
     ui->dbLabPhoto->setPixmap(pic.scaledToWidth(ui->dbLabPhoto->width()));
 }
 
-
+/**
+ * @brief 处理清除照片的点击事件
+ *
+ * 将当前记录的"photo"字段设置为空，并清除界面显示
+ */
 void studentManagement::on_actPhotoClear_clicked()
 {//清除照片
     int curRecNo=selModel->currentIndex().row();
@@ -302,20 +397,32 @@ void studentManagement::on_actPhotoClear_clicked()
     ui->dbLabPhoto->clear();        //清除QLabel组件的显示
 }
 
-
+/**
+ * @brief 处理升序排序的点击事件
+ *
+ * 根据选择的字段进行升序排序，并刷新数据
+ */
 void studentManagement::on_radioBtnAscend_clicked()
 {//升序排序
     tabModel->setSort(ui->comboFields->currentIndex(),Qt::AscendingOrder);
     tabModel->select();     //setSort()之后需要执行select()才会刷新数据
 }
 
-
+/**
+ * @brief 处理降序排序的点击事件
+ *
+ * 根据选择的字段进行降序排序
+ */
 void studentManagement::on_radioBtnDescend_clicked()
 {//降序排序
     tabModel->sort(ui->comboFields->currentIndex(),Qt::DescendingOrder);
 }
 
-
+/**
+ * @brief 处理选择男性的点击事件
+ *
+ * 禁用文本编辑框，清空文本，并设置筛选条件
+ */
 void studentManagement::on_radioBtnMan_clicked()
 {//选男性
     ui->lineEdit->setEnabled(false);
@@ -323,7 +430,11 @@ void studentManagement::on_radioBtnMan_clicked()
     tabModel->setFilter(" gender='男' ");
 }
 
-
+/**
+ * @brief 处理选择女性的点击事件
+ *
+ * 禁用文本编辑框，清空文本，并设置筛选条件
+ */
 void studentManagement::on_radioBtnWoman_clicked()
 {//选女性
     ui->lineEdit->setEnabled(false);
@@ -331,14 +442,22 @@ void studentManagement::on_radioBtnWoman_clicked()
     tabModel->setFilter(" gender='女' ");
 }
 
-
+/**
+ * @brief 处理全显示的点击事件
+ *
+ * 启用文本编辑框，并清空筛选条件
+ */
 void studentManagement::on_radioBtnBoth_clicked()
 {//全显示
     ui->lineEdit->setEnabled(true);
     tabModel->setFilter("");
 }
 
-
+/**
+ * @brief 处理选择字段排序的组合框索引变化事件
+ *
+ * 根据排序按钮状态和选择的字段进行排序，并刷新数据
+ */
 void studentManagement::on_comboFields_currentIndexChanged(int index)
 {//选择字段进行排序
     if (ui->radioBtnAscend->isChecked())
@@ -349,7 +468,13 @@ void studentManagement::on_comboFields_currentIndexChanged(int index)
     tabModel->select();
 }
 
-
+/**
+ * @brief 处理搜索学号文本框内容变化事件
+ *
+ * 根据输入内容设置筛选条件
+ *
+ * @param arg1 文本框的新内容
+ */
 void studentManagement::on_lineEdit_textChanged(const QString &arg1)
 {//搜索学号
     tabModel->setFilter(QString(" studentID LIKE '%1%' ").arg(arg1));

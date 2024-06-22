@@ -1,6 +1,17 @@
+/**
+ * @file Mchangepassword.cpp
+ * @brief 密码修改相关的类实现文件
+ */
+
 #include "managerTerminal/headfile/Mchangepassword.h"
 #include "ui_Mchangepassword.h"
 
+/**
+ * @brief 对输入的字符串进行 MD5 加密
+ *
+ * @param str 待加密的字符串
+ * @return QString 加密后的 16 进制字符串
+ */
 QString MchangePassword::encrypt(const QString &str)
 {//字符串MD5算法加密
     QByteArray btArray= str.toLocal8Bit();  //字符串转换为字节数组数据
@@ -13,6 +24,12 @@ QString MchangePassword::encrypt(const QString &str)
     return  md5;
 }
 
+/**
+ * @brief 密码修改类的构造函数
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 MchangePassword::MchangePassword(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -21,11 +38,20 @@ MchangePassword::MchangePassword(QWidget *parent,QSqlDatabase * GDB)
     ui->setupUi(this);
 }
 
+/**
+ * @brief 密码修改类的析构函数
+ */
 MchangePassword::~MchangePassword()
 {
     delete ui;
 }
 
+/**
+ * @brief 测试密码的安全性
+ *
+ * @param pswd 待测试的密码
+ * @return bool 如果密码符合安全规则返回 true，否则返回 false
+ */
 bool MchangePassword::test_password(const QString &pswd)
 {//测试密码安全性
     if(pswd.size() >= 8)
@@ -44,6 +70,9 @@ bool MchangePassword::test_password(const QString &pswd)
     else return false;
 }
 
+/**
+ * @brief 取消按钮的点击响应函数
+ */
 void MchangePassword::on_btnCancel_clicked()
 {//取消按钮响应
     ui->editNPSWD->setText("");
@@ -51,6 +80,9 @@ void MchangePassword::on_btnCancel_clicked()
     ui->editPSWD->setText("");
 }
 
+/**
+ * @brief 确定按钮的点击响应函数
+ */
 void MchangePassword::on_btnOK_clicked()
 {//"确定"按钮响应
     QString pswd=ui->editPSWD->text().trimmed();    //输入的密码

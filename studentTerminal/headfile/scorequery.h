@@ -29,6 +29,7 @@ public:
     scoreQuery(QWidget *parent = nullptr, QSqlDatabase * GDB = nullptr);
     ~scoreQuery();
 
+    void exportToCsv();
 private slots:
     void on_comboFields_currentTextChanged(const QString &arg1);
 

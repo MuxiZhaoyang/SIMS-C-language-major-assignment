@@ -1,6 +1,19 @@
+/**
+ * @file classmanagement.cpp
+ * @brief 班级管理类的实现文件
+ */
+
 #include "managerTerminal/headfile/classmanagement.h"
 #include "ui_classmanagement.h"
 
+/**
+ * @brief 班级管理类的构造函数
+ *
+ * 初始化班级管理界面的相关设置
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 classManagement::classManagement(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -75,12 +88,17 @@ classManagement::classManagement(QWidget *parent,QSqlDatabase * GDB)
 
 }
 
+/**
+ * @brief 班级管理类的析构函数
+ */
 classManagement::~classManagement()
 {
     delete ui;
 }
 
-//获取所有字段名称
+/**
+ * @brief 获取所有字段名称
+ */
 void classManagement::getFieldNames()
 {
     QSqlRecord  emptyRec=tabModel->record();    //获取空记录，只有字段名
@@ -88,7 +106,12 @@ void classManagement::getFieldNames()
         ui->comboFields->addItem(emptyRec.fieldName(i));
 }
 
-//数据发生修改，更新actPost和actCancel 的状态
+/**
+ * @brief 当数据发生修改时，更新 actPost 和 actCancel 的状态
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引
+ */
 void classManagement::do_currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current);
@@ -97,6 +120,12 @@ void classManagement::do_currentChanged(const QModelIndex &current, const QModel
     ui->actRevert->setEnabled(tabModel->isDirty());
 }
 
+/**
+ * @brief 处理当前行变化事件
+ *
+ * @param current 当前的模型索引
+ * @param previous 之前的模型索引
+ */
 void classManagement::do_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
@@ -109,6 +138,9 @@ void classManagement::do_currentRowChanged(const QModelIndex &current, const QMo
     QSqlRecord  curRec=tabModel->record(curRecNo); //获取当前记录
 }
 
+/**
+ * @brief 处理添加记录的点击事件
+ */
 void classManagement::on_actRecAppend_clicked()
 {//添加一条记录
     //// 使用QSqlRecord
@@ -122,7 +154,9 @@ void classManagement::on_actRecAppend_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);
 }
 
-
+/**
+ * @brief 处理插入记录的点击事件
+ */
 void classManagement::on_actRecInsert_clicked()
 {//插入一条记录
     //// 使用QSqlRecord
@@ -134,7 +168,9 @@ void classManagement::on_actRecInsert_clicked()
     selModel->setCurrentIndex(curIndex,QItemSelectionModel::Select);    //设置当前行
 }
 
-
+/**
+ * @brief 处理保存修改的点击事件
+ */
 void classManagement::on_actSubmit_clicked()
 {//保存修改
     bool res=tabModel->submitAll();
@@ -147,7 +183,9 @@ void classManagement::on_actSubmit_clicked()
     }
 }
 
-
+/**
+ * @brief 处理取消修改的点击事件
+ */
 void classManagement::on_actRevert_clicked()
 {//取消修改
     tabModel->revertAll();
@@ -155,25 +193,37 @@ void classManagement::on_actRevert_clicked()
     ui->actRevert->setEnabled(false);
 }
 
-
+/**
+ * @brief 处理删除当前记录的点击事件
+ */
 void classManagement::on_actRecDelete_clicked()
 {//删除当前记录
     QModelIndex curIndex=selModel->currentIndex();  //获取当前选择单元格的模型索引
     tabModel->removeRow(curIndex.row()); //删除当前行
 }
 
+/**
+ * @brief 处理升序排序的点击事件
+ */
 void classManagement::on_radioBtnAscend_clicked()
 {//升序排序
     tabModel->setSort(ui->comboFields->currentIndex(),Qt::AscendingOrder);
     tabModel->select();     //setSort()之后需要执行select()才会刷新数据
 }
 
-
+/**
+ * @brief 处理降序排序的点击事件
+ */
 void classManagement::on_radioBtnDescend_clicked()
 {//降序排序
     tabModel->sort(ui->comboFields->currentIndex(),Qt::DescendingOrder);
 }
 
+/**
+ * @brief 处理选择字段排序的组合框索引变化事件
+ *
+ * @param index 组合框的当前索引
+ */
 void classManagement::on_comboFields_currentIndexChanged(int index)
 {//选择字段进行排序
     if (ui->radioBtnAscend->isChecked())
@@ -184,6 +234,11 @@ void classManagement::on_comboFields_currentIndexChanged(int index)
     tabModel->select();
 }
 
+/**
+ * @brief 处理搜索姓名文本框内容变化事件
+ *
+ * @param arg1 文本框的新内容
+ */
 void classManagement::on_lineEdit_textChanged(const QString &arg1)
 {//搜索姓名
     tabModel->setFilter(QString(" classID LIKE '%1%' ").arg(arg1));

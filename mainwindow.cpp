@@ -1,6 +1,17 @@
+/**
+ * @file mainwindow.cpp
+ * @brief 这个文件包含了 `MainWindow` 类的实现，作为学生端的主界面
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/**
+ * @brief 构造函数，进行界面初始化
+ * 
+ * @param GDB 全局数据库连接
+ * @param parent 父对象
+ */
 MainWindow::MainWindow(QWidget *parent,QSqlDatabase * GDB)
     : QMainWindow(parent)
     , __GDB(GDB)
@@ -11,11 +22,20 @@ MainWindow::MainWindow(QWidget *parent,QSqlDatabase * GDB)
     initAll();          //总初始化函数
 }
 
+/**
+ * @brief 析构函数
+ * 
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+/**
+ * @brief 总初始化函数
+ * 
+ * 包含所有初始化内容
+ */
 void MainWindow::initAll()
 {//总初始化函数
 
@@ -70,6 +90,11 @@ void MainWindow::initAll()
     windows->setVisible(true);
 }
 
+/**
+ * @brief 退出时询问，生成询问对话框
+ * 
+ * @param event 全局事件
+ */
 void MainWindow::closeEvent(QCloseEvent *event)
 {//退出时询问，生成询问对话框
     QMessageBox::StandardButton result;
@@ -79,6 +104,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else event->ignore();
 }
 
+/**
+ * @brief 定时器刷新时间槽函数
+ * 
+ */
 void MainWindow::do_timerout()
 {//定时器刷新时间函数
     QTime curtime = QTime::currentTime();
@@ -87,29 +116,46 @@ void MainWindow::do_timerout()
     labTime->setText(tim);
 }
 
+/**
+ * @brief 界面刷新槽函数
+ * 
+ */
 void MainWindow::on_a1_triggered()
 {
     windows->setCurrentIndex(0);
 }
 
+/**
+ * @brief 界面刷新槽函数
+ * 
+ */
 void MainWindow::on_a2_triggered()
 {
     windows->setCurrentIndex(1);
 }
 
-
+/**
+ * @brief 界面刷新槽函数
+ * 
+ */
 void MainWindow::on_a4_triggered()
 {
     windows->setCurrentIndex(2);
 }
 
-
+/**
+ * @brief 界面刷新槽函数
+ * 
+ */
 void MainWindow::on_a5_triggered()
 {
     windows->setCurrentIndex(3);
 }
 
-
+/**
+ * @brief 界面刷新槽函数
+ * 
+ */
 void MainWindow::on_a6_triggered()
 {
     windows->setCurrentIndex(4);

@@ -1,6 +1,19 @@
+/**
+ * @file courseinformation.cpp
+ * @brief 该文件包含了 `courseInformation` 类的定义，用于处理课程信息相关的操作和界面交互
+ */
+
 #include "studentTerminal/headfile/courseinformation.h"
 #include "ui_courseinformation.h"
 
+/**
+ * @brief `courseInformation` 类的构造函数
+ *
+ * 初始化课程信息界面，并进行相关数据和组件的设置
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 courseInformation::courseInformation(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -35,8 +48,12 @@ courseInformation::courseInformation(QWidget *parent,QSqlDatabase * GDB)
     {//查询数据失败
         QMessageBox::critical(this, "错误信息",
                               "打开数据表错误,错误信息:\n"+tabModel->lastError().text());
-        return;
+        ui->exportBtn_2->setEnabled(false);
+        return;     
     }
+
+    //初始化CSV模块
+    connect(ui->exportBtn_2, &QPushButton::clicked, this, &courseInformation::exportToCsv);
 
     //设置字段显示标题
     QSqlRecord rec = tabModel->record();        //获取一个空记录，用于获取字段序号
@@ -81,11 +98,60 @@ courseInformation::courseInformation(QWidget *parent,QSqlDatabase * GDB)
     ui->radioBtnDescend->setEnabled(false);
 }
 
+/**
+ * @brief `courseInformation` 类的析构函数
+ *
+ * 释放分配的界面资源
+ */
 courseInformation::~courseInformation()
 {
     delete ui;
 }
 
+/**
+ * @brief CSV模块输出函数
+ *
+ * 在指定位置生成CSV文件
+ */
+void courseInformation::exportToCsv()
+{//CSV模块
+    QString filePath = QFileDialog::getSaveFileName(this, "导出 CSV 文件", "", "CSV 文件 (*.csv)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::critical(this, "错误", "无法打开文件进行写入");
+        return;
+    }
+
+    QTextStream out(&file);
+
+    // 写入表头
+    out << "学期" << ',' << "课程" << ',' << "课程类型" << ',' << "学分" << ',' << "授课教师" << ',' << "上课时间" << ',' << "地点" << ',' << "开设学院" << '\n';
+
+    int rowCount = tabModel->rowCount();
+    for (int row = 0; row < rowCount; ++row) {
+        for (int col = 0; col < tabModel->columnCount(); ++col) {
+            QModelIndex index = tabModel->index(row, col);
+            QString data = tabModel->data(index).toString();
+            if(col == tabModel->columnCount()-1)out << data;
+            else out << data << ',';
+        }
+        out << '\n';
+    }
+
+    file.close();
+}
+
+/**
+ * @brief 当组合框字段的当前文本改变时的处理函数
+ *
+ * 根据新的选择切换排序方式，并更新相关显示
+ *
+ * @param arg1 组合框的当前文本
+ */
 void courseInformation::on_comboFields_currentTextChanged(const QString &arg1)
 {//切换排序方式
     Q_UNUSED(arg1)
@@ -125,7 +191,11 @@ void courseInformation::on_comboFields_currentTextChanged(const QString &arg1)
     }
 }
 
-
+/**
+ * @brief 当升序单选按钮被点击时的处理函数
+ *
+ * 切换排序方式并更新显示
+ */
 void courseInformation::on_radioBtnAscend_clicked()
 {//切换排序方式
     QString str,now;
@@ -152,7 +222,11 @@ void courseInformation::on_radioBtnAscend_clicked()
     }
 }
 
-
+/**
+ * @brief 当降序单选按钮被点击时的处理函数
+ *
+ * 切换排序方式并更新显示
+ */
 void courseInformation::on_radioBtnDescend_clicked()
 {//切换排序方式
     QString str,now;
@@ -179,7 +253,13 @@ void courseInformation::on_radioBtnDescend_clicked()
     }
 }
 
-
+/**
+ * @brief 当学期选择组合框的当前文本改变时的处理函数
+ *
+ * 切换排序方式，执行查询，并更新显示
+ *
+ * @param arg1 学期选择组合框的当前文本
+ */
 void courseInformation::on_termSelection_currentTextChanged(const QString &arg1)
 {//切换排序方式
     ui->term->setText(ui->termSelection->currentText());    //刷新学期

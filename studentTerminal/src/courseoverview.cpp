@@ -1,6 +1,16 @@
+/**
+@file courseoverview.cpp
+@brief 此文件包含了 courseOverview 类的定义，用于处理课程概览相关的功能
+*/
+
 #include "studentTerminal/headfile/courseoverview.h"
 #include "ui_courseoverview.h"
 
+/**
+@brief courseOverview 类的构造函数
+@param parent 父窗口指针
+@param GDB 数据库指针
+*/
 courseOverview::courseOverview(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -71,11 +81,17 @@ courseOverview::courseOverview(QWidget *parent,QSqlDatabase * GDB)
     ui->radioBtnDescend->setEnabled(false);
 }
 
+/**
+@brief courseOverview 类的析构函数
+*/
 courseOverview::~courseOverview()
 {
     delete ui;
 }
 
+/**
+@brief 加载课程表
+*/
 void courseOverview::setClassSchedule()
 {//加载课程表
     QSqlRecord rec = tabModel->record();        //获取一个空记录，用于获取字段序号
@@ -145,6 +161,11 @@ void courseOverview::setClassSchedule()
 
 }
 
+/**
+ * @brief 初始化课程表的样式和文本内容
+ *
+ * 该函数将所有与课程表相关的控件的样式设置为空，并清空其文本内容。
+ */
 void courseOverview::initClassSchedule()
 {//初始化课程表
     ui->d11->setStyleSheet("");
@@ -232,6 +253,13 @@ void courseOverview::initClassSchedule()
     ui->dt75->setText("");
 }
 
+/**
+ * @brief 当组合框字段的当前文本改变时的处理函数
+ *
+ * 用于根据选择的文本切换排序方式，并重新执行数据库查询
+ *
+ * @param arg1 组合框的当前文本
+ */
 void courseOverview::on_comboFields_currentTextChanged(const QString &arg1)
 {//切换排序方式
     Q_UNUSED(arg1)
@@ -258,7 +286,11 @@ void courseOverview::on_comboFields_currentTextChanged(const QString &arg1)
     tabModel->setQuery(str,*__GDB);     //二次查询
 }
 
-
+/**
+ * @brief 当升序单选按钮被点击时的处理函数
+ *
+ * 用于根据当前组合框的选择和升序状态重新执行数据库查询
+ */
 void courseOverview::on_radioBtnAscend_clicked()
 {//切换排序方式
     QString str,now;
@@ -273,7 +305,11 @@ void courseOverview::on_radioBtnAscend_clicked()
     tabModel->setQuery(str,*__GDB);     //二次查询
 }
 
-
+/**
+ * @brief 当降序单选按钮被点击时的处理函数
+ *
+ * 用于根据当前组合框的选择和降序状态重新执行数据库查询
+ */
 void courseOverview::on_radioBtnDescend_clicked()
 {//切换排序方式
     QString str,now;
@@ -288,7 +324,13 @@ void courseOverview::on_radioBtnDescend_clicked()
     tabModel->setQuery(str,*__GDB);     //二次查询
 }
 
-
+/**
+ * @brief 当学期选择组合框的当前文本改变时的处理函数
+ *
+ * 刷新学期显示，根据选择切换排序方式并重新执行数据库查询，计算学分和，初始化和加载课程表
+ *
+ * @param arg1 学期选择组合框的当前文本
+ */
 void courseOverview::on_termSelection_currentTextChanged(const QString &arg1)
 {//切换排序方式
     ui->term->setText(ui->termSelection->currentText());    //刷新学期

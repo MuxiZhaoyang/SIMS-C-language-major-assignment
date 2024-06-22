@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp
+ * @brief 包含主函数，驱动程序的运行
+ */
+
 #include "mainwindow.h"
 #include "m_mainwindow.h"
 #include "login.h"
@@ -6,6 +11,13 @@
 #include <QApplication>
 #include <QTimer>
 
+/**
+ * @brief 主函数
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

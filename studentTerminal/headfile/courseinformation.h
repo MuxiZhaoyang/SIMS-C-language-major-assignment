@@ -30,6 +30,7 @@ public:
     courseInformation(QWidget *parent = nullptr, QSqlDatabase * GDB = nullptr);
     ~courseInformation();
 
+    void exportToCsv();
 private slots:
     void on_comboFields_currentTextChanged(const QString &arg1);
 

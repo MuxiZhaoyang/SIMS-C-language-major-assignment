@@ -30,6 +30,7 @@
 #include <QItemSelectionModel>
 #include  <QComboBox>
 #include <QSqlRelationalDelegate>
+#include <QPushButton>
 
 class smsDatabase
 {//数据库类，用于实现项目里的各种数据库查询

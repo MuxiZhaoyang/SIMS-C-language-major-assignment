@@ -1,6 +1,17 @@
+/**
+ * @file userinfo.cpp
+ * @brief 这个文件包含了 `userInfo` 类的实现，用于显示学生个人信息
+ */
+
 #include "studentTerminal/headfile/userinfo.h"
 #include "ui_userinfo.h"
 
+/**
+ * @brief 构造函数，用于初始化用户信息界面
+ *
+ * @param parent 父窗口指针
+ * @param GDB 数据库指针
+ */
 userInfo::userInfo(QWidget *parent,QSqlDatabase * GDB)
     : QWidget(parent)
     , __GDB(GDB)
@@ -41,6 +52,9 @@ userInfo::userInfo(QWidget *parent,QSqlDatabase * GDB)
     }
 }
 
+/**
+ * @brief 析构函数，释放资源
+ */
 userInfo::~userInfo()
 {
     delete ui;
