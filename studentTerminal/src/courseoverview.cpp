@@ -152,8 +152,8 @@ void courseOverview::setClassSchedule()
 
                 else break;
 
-                d->setStyleSheet("QGroupBox { background-color: red; }"
-                                 "QGroupBox::contents { background-color: red; }"); // 针对内部区域
+                d->setStyleSheet("QGroupBox { background-color: rgb(156, 12, 19); }"
+                                 "QLabel{color:rgb(255,255,255);}"); // 针对内部区域
                 dt->setText(_name + "\n" + _place);
             }
         }

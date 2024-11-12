@@ -215,20 +215,7 @@
 
 定义在smsdatabase.h和smsdatabase.cpp文件里，会在main.cpp中新建一个全局所有组件所共用的数据库接口(QSqlDatabase)，会通过各自组件的构造函数传递smsDatabase类的指针给其他组件,模块会自动管理SQLite数据库接口的开启和关闭。
 
-### 二.流程图：
-
-```flow
-st=>start: 程序启动
-e=>end: 程序关闭
-setGDB=>operation: 创建一个smsDatabase对象，创建数据库接口
-login=>operation: smsDatabase对象删除，关闭数据库接口
-sub=>subroutine: 传递给各组件(构造函数)
-
-st->setGDB->sub->login->e
-
-```
-
-### 三.数据库组成(students.db3文件)：
+### 二.数据库组成(students.db3文件)：
 
 使用SQLite搭建的数据库，具体内容如下：
 

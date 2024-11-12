@@ -10,7 +10,7 @@
 
 #include <QApplication>
 #include <QTimer>
-
+#include <QStyleFactory>
 /**
  * @brief 主函数
  * 
@@ -21,6 +21,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication::setStyle("Fusion");
     smsDatabase GDB;                //全局数据库访问点
 
     Login *LoginWindow = new Login(GDB.getConnection());  //创建登录界面

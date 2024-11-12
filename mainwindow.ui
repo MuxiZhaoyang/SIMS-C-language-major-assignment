@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="rec.qrc">
-    <normaloff>:/icon/studentSystem.ico</normaloff>:/icon/studentSystem.ico</iconset>
+    <normaloff>:/icon/sdu_logo.ico</normaloff>:/icon/sdu_logo.ico</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -38,11 +38,23 @@
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string notr="true">QStatusBar {
+	background-color: rgb(156, 12, 19); /* 设置工具栏背景色 */
+	color: rgb(255, 255, 255); /* 设置工具栏文本和图标颜色 */
+	selection-background-color: rgb(255, 255, 127); /* 设置选中项的背景色 */
+}</string>
+   </property>
+  </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="mouseTracking">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="tabletTracking">
     <bool>true</bool>
@@ -50,11 +62,36 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton:pressed,
+QToolButton:hover,
+QToolButton:flat,
+QToolButton:checked {
+    background-color: rgb(255, 184, 121); /* 背景色 */
+    color: rgb(255, 255, 255); /* 黑色字体颜色，提高对比度 */
+}
+QToolButton{
+	color: rgb(255, 255, 255);
+}
+
+QToolBar:disabled {
+    background-color: rgb(255, 184, 121); /* 背景色 */
+    color: rgb(255, 255, 255); /* 黑色字体颜色，提高对比度 */
+}
+
+QToolBar {
+    background-color: rgb(156, 12, 19);
+    color: rgb(255, 255, 255); /* 字体颜色 */
+}</string>
+   </property>
    <property name="movable">
     <bool>true</bool>
    </property>
    <property name="orientation">
-    <enum>Qt::Vertical</enum>
+    <enum>Qt::Horizontal</enum>
    </property>
    <property name="iconSize">
     <size>
@@ -69,7 +106,7 @@
     <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>

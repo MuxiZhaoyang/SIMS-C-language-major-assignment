@@ -24,7 +24,29 @@
   </property>
   <property name="windowIcon">
    <iconset resource="rec.qrc">
-    <normaloff>:/icon/studentSystem.ico</normaloff>:/icon/studentSystem.ico</iconset>
+    <normaloff>:/icon/sdu_logo.ico</normaloff>:/icon/sdu_logo.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QToolButton:pressed,
+QToolButton:hover,
+QToolButton:flat,
+QToolButton:checked {
+    background-color: rgb(255, 184, 121); /* 背景色 */
+    color: rgb(255, 255, 255); /* 黑色字体颜色，提高对比度 */
+}
+QToolButton{
+	color: rgb(255, 255, 255);
+}
+
+QToolBar:disabled {
+    background-color: rgb(255, 184, 121); /* 背景色 */
+    color: rgb(255, 255, 255); /* 黑色字体颜色，提高对比度 */
+}
+
+QToolBar {
+    background-color: rgb(156, 12, 19);
+    color: rgb(255, 255, 255); /* 字体颜色 */
+}</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -32,7 +54,11 @@
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="enabled">
     <bool>true</bool>
@@ -68,7 +94,7 @@
     <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
@@ -83,7 +109,15 @@
    <addaction name="separator"/>
    <addaction name="a7"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string notr="true">QStatusBar {
+	background-color: rgb(156, 12, 19); /* 设置工具栏背景色 */
+	color: rgb(255, 255, 255); /* 设置工具栏文本和图标颜色 */
+	selection-background-color: rgb(255, 255, 127); /* 设置选中项的背景色 */
+}</string>
+   </property>
+  </widget>
   <action name="a1">
    <property name="checkable">
     <bool>true</bool>

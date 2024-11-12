@@ -51,6 +51,7 @@ void MainWindow::initAll()
 
     labTime = new QLabel(this);
     labTime->setMinimumWidth(150);
+    labTime->setStyleSheet("QLabel{color: rgb(255, 255, 255);}");
     ui->statusbar->addPermanentWidget(labTime);         //添加组件
 
     //状态栏显示山东大学图标
@@ -59,6 +60,7 @@ void MainWindow::initAll()
     pic.load(":/icon/images/sdu.png");
     pic = pic.scaled(200, 25, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     sduIcon->setPixmap(pic);
+    sduIcon->setStyleSheet("QLabel{background-color: rgb(255, 255, 255);}");
     ui->statusbar->addPermanentWidget(sduIcon);
 
     //设置工具栏QAction类选择互斥
