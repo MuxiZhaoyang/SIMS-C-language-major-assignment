@@ -273,3 +273,8 @@
 - **开发环境**：Qt Creator
 - **编译器**：MinGW/g++/clang++
 - **数据库**：SQLite
+
+## 许可
+[MIT License](LICENSE)
+
+Copyright (c) 2025 Muxi
